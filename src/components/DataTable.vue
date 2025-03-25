@@ -94,13 +94,13 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
-const router = useRouter()
+// const router = useRouter()
 
 const products = ref([])
 const isLoading = ref(true)
 const search = ref(route.query.search || '')
-const limit = ref(parseInt(route.query.limit) || 10)
-const offset = ref(parseInt(route.query.offset) || 0)
+const limit = ref(parseInt(route.query.limit as string) || 10)
+const offset = ref(parseInt(route.query.offset as string) || 0)
 
 const fetchData = async (newOffset = offset.value) => {
   isLoading.value = true
@@ -126,7 +126,7 @@ const prevPage = () => fetchData(offset.value - limit.value)
 
 const filteredProducts = computed(() => {
   return products.value.filter((item) =>
-    item.title.toLowerCase().includes(search.value.toLowerCase()),
+    (item.title as string).toLowerCase().includes((search.value as string).toLowerCase()),
   )
 })
 

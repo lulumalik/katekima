@@ -144,7 +144,7 @@ const toggleSortOrder = () => {
 // Filter pencarian
 const filteredData = computed(() => {
   return sortedData.value.filter((item) =>
-    item.name.toLowerCase().includes((search.value as string).toLowerCase()),
+    (item.name as string).toLowerCase().includes((search.value as string).toLowerCase()),
   )
 })
 
