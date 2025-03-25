@@ -12,6 +12,7 @@
           class="w-full md:w-1/2 p-2 text-black border rounded-lg focus:ring focus:ring-blue-300"
         />
         <select
+          @change="fetchData()"
           v-model="limit"
           class="p-2 border text-black rounded-lg bg-gray-50 focus:ring focus:ring-blue-300"
         >
@@ -105,6 +106,7 @@ const totalCount = ref(0)
 const sortOrder = ref<'asc' | 'desc'>('asc')
 
 const fetchData = async (newOffset = offset.value) => {
+  if (newOffset < 0) newOffset = 0 // Prevents negative offset
   isLoading.value = true
   berries.value = []
   try {
@@ -128,7 +130,11 @@ const currentPage = computed(() => Math.floor(offset.value / limit.value) + 1)
 const hasNextPage = computed(() => offset.value + limit.value < totalCount.value)
 
 const nextPage = () => fetchData(offset.value + limit.value)
-const prevPage = () => fetchData(offset.value - limit.value)
+const prevPage = () => {
+  if (offset.value > 0) {
+    fetchData(Math.max(0, offset.value - limit.value)) // Ensures offset never goes below 0
+  }
+}
 
 // Sorting
 const sortedData = computed(() => {
