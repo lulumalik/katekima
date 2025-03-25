@@ -13,7 +13,6 @@ const routes = [
   { path: '/berry/:id', component: BerryDetails },
   { path: '/detail/:id', component: Detail },
   { path: '/add', component: AddEdit },
-  { path: '/edit/:id', component: AddEdit },
 ]
 
 const router = createRouter({
